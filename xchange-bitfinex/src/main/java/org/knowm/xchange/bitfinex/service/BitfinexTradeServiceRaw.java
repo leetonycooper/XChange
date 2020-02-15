@@ -38,10 +38,7 @@ import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexPastTradesRequest;
 import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexReplaceOrderRequest;
 import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexTradeResponse;
 import org.knowm.xchange.bitfinex.v2.dto.EmptyRequest;
-import org.knowm.xchange.bitfinex.v2.dto.trade.ActiveOrder;
-import org.knowm.xchange.bitfinex.v2.dto.trade.OrderTrade;
-import org.knowm.xchange.bitfinex.v2.dto.trade.Position;
-import org.knowm.xchange.bitfinex.v2.dto.trade.Trade;
+import org.knowm.xchange.bitfinex.v2.dto.trade.*;
 import org.knowm.xchange.dto.Order;
 import org.knowm.xchange.dto.Order.OrderType;
 import org.knowm.xchange.dto.trade.FixedRateLoanOrder;
@@ -535,5 +532,32 @@ public class BitfinexTradeServiceRaw extends BitfinexBaseService {
 
     return bitfinexV2.getOrderTrades(
             exchange.getNonceFactory(), apiKey, signatureV2, symbol, orderId, EmptyRequest.INSTANCE);
+  }
+
+  public List<HistoryOrder> getBitfinexOrderHistoryV2(String symbol, Long startTimeMillis, Long endTimeMillis, Long limit)
+          throws IOException {
+    return bitfinexV2.getOrdersHistory(
+            exchange.getNonceFactory(),
+            apiKey,
+            signatureV2,
+            symbol,
+            startTimeMillis,
+            endTimeMillis,
+            limit,
+            EmptyRequest.INSTANCE
+    );
+  }
+
+  public List<HistoryOrder> getBitfinexOrderHistoryV2(Long startTimeMillis, Long endTimeMillis, Long limit)
+          throws IOException {
+    return bitfinexV2.getOrdersHistory(
+            exchange.getNonceFactory(),
+            apiKey,
+            signatureV2,
+            startTimeMillis,
+            endTimeMillis,
+            limit,
+            EmptyRequest.INSTANCE
+    );
   }
 }

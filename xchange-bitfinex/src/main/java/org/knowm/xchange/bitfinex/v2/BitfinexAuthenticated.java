@@ -17,6 +17,7 @@ import org.knowm.xchange.bitfinex.v2.dto.trade.ActiveOrder;
 import org.knowm.xchange.bitfinex.v2.dto.trade.OrderTrade;
 import org.knowm.xchange.bitfinex.v2.dto.trade.Position;
 import org.knowm.xchange.bitfinex.v2.dto.trade.Trade;
+import org.knowm.xchange.bitfinex.v2.dto.trade.HistoryOrder;
 import si.mazi.rescu.ParamsDigest;
 import si.mazi.rescu.SynchronizedValueFactory;
 
@@ -124,4 +125,31 @@ public interface BitfinexAuthenticated extends Bitfinex {
           @PathParam("orderId") Long orderId,
           EmptyRequest empty)
           throws IOException, BitfinexExceptionV2;
+
+  /** https://docs.bitfinex.com/reference#rest-auth-orders-history **/
+  @POST
+  @Path("auth/r/orders/{symbol}/hist")
+  List<HistoryOrder> getOrdersHistory(
+          @HeaderParam(BFX_NONCE) SynchronizedValueFactory<Long> nonce,
+          @HeaderParam(BFX_APIKEY) String apiKey,
+          @HeaderParam(BFX_SIGNATURE) ParamsDigest signature,
+          @PathParam("symbol") String symbol,
+          @QueryParam("start") Long startTimeMillis,
+          @QueryParam("end") Long endTimeMillis,
+          @QueryParam("limit") Long limit,
+          EmptyRequest empty)
+          throws IOException, BitfinexExceptionV2;
+
+  @POST
+  @Path("auth/r/orders/hist")
+  List<HistoryOrder> getOrdersHistory(
+          @HeaderParam(BFX_NONCE) SynchronizedValueFactory<Long> nonce,
+          @HeaderParam(BFX_APIKEY) String apiKey,
+          @HeaderParam(BFX_SIGNATURE) ParamsDigest signature,
+          @QueryParam("start") Long startTimeMillis,
+          @QueryParam("end") Long endTimeMillis,
+          @QueryParam("limit") Long limit,
+          EmptyRequest empty)
+          throws IOException, BitfinexExceptionV2;
 }
+
